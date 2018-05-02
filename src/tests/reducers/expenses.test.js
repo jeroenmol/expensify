@@ -47,24 +47,42 @@ test("should add an expense", () => {
 });
 
 // should edit an expense
-// should edit an expense with non-existing id
+test('should edit an expense', () => {
+  const updates = {
+    id: '1',
+    description: 'Laptop',
+    note: '',
+    createdAt: 20000,
+    amount: 29500
+  };
 
-// switch (action.type) {
-//     case 'ADD_EXPENSE':
-//       return [
-//         ...state,
-//         action.expense
-//       ];
-//     case 'EDIT_EXPENSE':
-//       return state.map((expense) => {
-//         if (expense.id === action.id) {
-//           return {
-//             ...expense,
-//             ...action.updates
-//           };
-//         } else {
-//           return expense;
-//         };
-//       });
-//     default:
-//       return state;
+  const action = {
+    type: 'EDIT_EXPENSE',
+    id: '1',
+    updates
+  };
+
+  const state = expensesReducer(expenses, action);
+  expect(state[0]).toEqual(updates);
+})
+
+
+// should edit an expense with non-existing id
+test('should edit an expense with non-existing id', () => {
+  const updates = {
+    id: '1',
+    description: 'Laptop',
+    note: '',
+    createdAt: 20000,
+    amount: 29500
+  };
+
+  const action = {
+    type: 'EDIT_EXPENSE',
+    id: '-1',
+    updates
+  };
+
+  const state = expensesReducer(expenses, action);
+  expect(state).toEqual(expenses);
+});
